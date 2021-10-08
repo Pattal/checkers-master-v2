@@ -12,18 +12,26 @@ public class Gameplay : MonoBehaviour
     public Grid Grid { get; private set; }
     private Plane plane;
 
+    private Checker.Team currentTeam = Checker.Team.White;
+     public Checker[,] CheckersOnChessboard;
+
     // Start is called before the first frame update
     private void Awake()
     {
         Instance = this;
         Grid = GetComponent<Grid>();
         plane = new Plane(Vector3.up, Vector3.zero);
+        CheckersOnChessboard = new Checker[Width, Height];
     }
 
     // Update is called once per frame
     private void Update()
     {
         MouseInput();
+
+
+        Debug.Log(CheckersOnChessboard[7, 7]);
+        
     }
 
     public void Raycast(Ray ray, out Vector3Int field)
@@ -41,9 +49,31 @@ public class Gameplay : MonoBehaviour
         
     }
 
+    public Vector3Int GetCoodiantesOfCell(Vector3 position)
+    {
+        return Grid.WorldToCell(position);
+    }
+
+    public void SetPlayingChecker(Checker checker)
+    {
+        var checkerCell = checker.CurrentCell;
+        if (!IsCheckerPlaying(checkerCell))
+        {
+            return;
+        }
+
+        
+        CheckersOnChessboard[checkerCell.z, checkerCell.x] = checker;
+        Debug.Log(checkerCell.y+ " Yes " +  checkerCell.x);
+    }
+    
     private void MouseInput()
     {
         Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out Vector3Int clickedCell);
-        Debug.Log(clickedCell);
+        //Debug.Log(clickedCell);
+    }
+    public bool IsCheckerPlaying(Vector3Int cell)
+    {
+        return cell.x >= 0 && cell.x < Width && cell.y >= 0 && cell.y < Height;
     }
 }
