@@ -17,7 +17,8 @@ public class Checker : MonoBehaviour
     {
         CurrentCell = Gameplay.Instance.GetCoodiantesOfCell(transform.position);
         Gameplay.Instance.SetPlayingChecker(this);
-        Debug.Log(Gameplay.Instance.IsCheckerPlaying(CurrentCell));
+        // delete after pototype
+        transform.position = Gameplay.Instance.Grid.GetCellCenterWorld(CurrentCell);
     }
 
 
