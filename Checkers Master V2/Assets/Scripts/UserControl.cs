@@ -13,6 +13,7 @@ public class UserControl : MonoBehaviour
 
     private GameState currentState;
     private Checker selectedChecker;
+    [SerializeField] GameObject selectIndicator;
 
     private Vector3Int[] possibleCellsToMove;
 
@@ -22,7 +23,7 @@ public class UserControl : MonoBehaviour
     {
         currentState = GameState.CheckerSelecting;
         possibleCellsToMove = new Vector3Int[maximumNumberOfMoves];
-
+        selectIndicator.SetActive(false);
     }
     private void Update()
     {
@@ -46,8 +47,23 @@ public class UserControl : MonoBehaviour
                 selectedChecker = null;
             }
 
-            Debug.Log(selectedChecker);
+            if(selectedChecker != null)
+            {
+                selectIndicator.SetActive(true);
+                var newPosition = new Vector3(selectedChecker.transform.position.x, -0.1f, selectedChecker.transform.position.z);
+                selectIndicator.transform.position = newPosition;
+            }
+            else
+            {
+                DeselectChecker();
+            }
         }
+    }
+
+    private void DeselectChecker()
+    {
+        selectedChecker = null;
+        selectIndicator.SetActive(false);
     }
 
 
