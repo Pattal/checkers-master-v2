@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checker : MonoBehaviour
+public abstract class Checker : MonoBehaviour
 {
    public enum Team 
     { 
@@ -13,7 +13,7 @@ public class Checker : MonoBehaviour
     public Vector3Int CurrentCell;
     public Team Side;
 
-    void Start()
+    virtual protected void Start()
     {
         CurrentCell = Gameplay.Instance.GetCoodiantesOfCell(transform.position);
         Gameplay.Instance.SetPlayingChecker(this);
@@ -22,4 +22,32 @@ public class Checker : MonoBehaviour
     }
 
 
+    public virtual int FindPossibleCellsToMove(out Vector3Int[] cells)
+    {
+        cells = new Vector3Int[4];
+        int count = 0;
+        Vector3Int[] directions = { CurrentCell + new Vector3Int(0,0,1) + Vector3Int.left,
+                                    CurrentCell + new Vector3Int(0,0,1) + Vector3Int.right,
+                                    CurrentCell + new Vector3Int(0,0,-1) + Vector3Int.left,
+                                    CurrentCell + new Vector3Int(0,0,-1) + Vector3Int.right
+                                 };
+        
+        foreach(Vector3Int cell in directions)
+        {
+            
+            if(!Gameplay.Instance.IsCheckerPlaying(cell))
+            {
+                continue;
+            }
+
+            Debug.Log(cell);
+            if (Gameplay.Instance.GetChecker(cell) == null)
+            {
+                cells[count] = cell;
+                count++;
+            }
+        }
+
+        return count;
+    }
 }

@@ -14,8 +14,10 @@ public class UserControl : MonoBehaviour
     private GameState currentState;
     private Checker selectedChecker;
     [SerializeField] GameObject selectIndicator;
+    [SerializeField] GameObject possibleMoveIndicator;
 
     private Vector3Int[] possibleCellsToMove;
+    private List<GameObject> possibleMovePools = new List<GameObject>();
 
     const int maximumNumberOfMoves = 4;
 
@@ -24,6 +26,14 @@ public class UserControl : MonoBehaviour
         currentState = GameState.CheckerSelecting;
         possibleCellsToMove = new Vector3Int[maximumNumberOfMoves];
         selectIndicator.SetActive(false);
+
+        for(int i = 0; i < maximumNumberOfMoves; i++)
+        {
+            var go = Instantiate(possibleMoveIndicator);
+            go.SetActive(false);
+            possibleMovePools.Add(go);
+        }
+
     }
     private void Update()
     {
@@ -31,6 +41,8 @@ public class UserControl : MonoBehaviour
         {
             SelectChecker();
         }
+
+        
     }
     private void SelectChecker()
     {
@@ -52,6 +64,14 @@ public class UserControl : MonoBehaviour
                 selectIndicator.SetActive(true);
                 var newPosition = new Vector3(selectedChecker.transform.position.x, -0.1f, selectedChecker.transform.position.z);
                 selectIndicator.transform.position = newPosition;
+
+                int count = selectedChecker.FindPossibleCellsToMove( out possibleCellsToMove);
+
+                for(int i = 0; i < count; i++)
+                {
+                    possibleMovePools[i].SetActive(true);
+                    possibleMovePools[i].transform.position = Gameplay.Instance.Grid.GetCellCenterWorld(possibleCellsToMove[i]);
+                }
             }
             else
             {

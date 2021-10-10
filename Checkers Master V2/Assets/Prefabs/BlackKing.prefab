@@ -59,5 +59,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlackKing
       objectReference: {fileID: 0}
+    - target: {fileID: 7894142518670171867, guid: caedeef128ef986438adc45ffecbe0cb, type: 3}
+      propertyPath: Side
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: caedeef128ef986438adc45ffecbe0cb, type: 3}

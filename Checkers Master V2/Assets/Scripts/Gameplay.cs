@@ -70,6 +70,6 @@ public class Gameplay : MonoBehaviour
     }
     public bool IsCheckerPlaying(Vector3Int cell)
     {
-        return cell.x >= 0 && cell.x < Width && cell.y >= 0 && cell.y < Height;
+        return cell.x >= 0 && cell.x < Width && cell.z >= 0 && cell.z < Height;
     }
 }
