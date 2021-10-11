@@ -43,10 +43,13 @@ public abstract class Checker : MonoBehaviour
             }
             else if(Gameplay.Instance.GetChecker(cell) != null && Gameplay.Instance.GetChecker(cell).Side != Side)
             {
-                Vector3Int possibleDirection = GetAttackDirections(cell);
+                Vector3Int possibleAttack = GetAttackDirections(cell);
 
-                cells[count] = possibleDirection;
-                count++;
+                if(Gameplay.Instance.GetChecker(cell) == null)
+                {
+                    cells[count] = possibleAttack;
+                    count++;
+                }
 
             }
         }
@@ -58,15 +61,7 @@ public abstract class Checker : MonoBehaviour
     protected Vector3Int GetAttackDirections(Vector3Int cell)
     {
         Vector3Int diff = cell - CurrentCell;
-
-        
         return cell + diff;
-    }
-
-    private Vector3Int GetAbsoluteFromVector(Vector3Int vector)
-    {
-        Vector3Int abs = new Vector3Int(Mathf.Abs(vector.x), 0, Mathf.Abs(vector.z));
-        return abs;
     }
 
 }
