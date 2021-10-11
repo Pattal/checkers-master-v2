@@ -15,5 +15,9 @@ public class King : Checker
     {
         
     }
-    
+
+    protected override Vector3Int[] GetDirections()
+    {
+        throw new System.NotImplementedException();
+    }
 }

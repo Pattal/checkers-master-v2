@@ -52,6 +52,7 @@ public class UserControl : MonoBehaviour
 
             if(clickedChecker != null && clickedChecker.Side == Gameplay.Instance.CurrentTeam)
             {
+                DeselectChecker();
                 selectedChecker = clickedChecker;
             }
             else
@@ -65,12 +66,14 @@ public class UserControl : MonoBehaviour
                 var newPosition = new Vector3(selectedChecker.transform.position.x, -0.1f, selectedChecker.transform.position.z);
                 selectIndicator.transform.position = newPosition;
 
-                int count = selectedChecker.FindPossibleCellsToMove( out possibleCellsToMove);
+                Vector3Int[] directions = null;
+                int count = selectedChecker.FindPossibleCellsToMove( out possibleCellsToMove, directions);
 
                 for(int i = 0; i < count; i++)
                 {
                     possibleMovePools[i].SetActive(true);
                     possibleMovePools[i].transform.position = Gameplay.Instance.Grid.GetCellCenterWorld(possibleCellsToMove[i]);
+                    possibleMovePools[i].transform.position += new Vector3(0, -0.12f, 0);
                 }
             }
             else
@@ -84,6 +87,11 @@ public class UserControl : MonoBehaviour
     {
         selectedChecker = null;
         selectIndicator.SetActive(false);
+
+        foreach(GameObject indicator in possibleMovePools)
+        {
+            indicator.SetActive(false);
+        }
     }
 
 
