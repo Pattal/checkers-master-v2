@@ -20,7 +20,7 @@ public class MoveCommand : CommandManager.ICommand
         if(checker != null)
         {
             Gameplay.Instance.MoveChecker(checker, end);
-
+            Gameplay.Instance.SwitchTeam();
         }
 
     }

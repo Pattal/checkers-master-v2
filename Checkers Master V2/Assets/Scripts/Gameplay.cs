@@ -77,9 +77,15 @@ public class Gameplay : MonoBehaviour
     {
         CheckersOnChessboard[checker.CurrentCell.x, checker.CurrentCell.z] = null;
         CheckersOnChessboard[to.x, to.z] = checker;
+        checker.CurrentCell = to;
         checker.transform.position = Gameplay.Instance.Grid.GetCellCenterWorld((new Vector3Int(to.x, 0, to.z)));
         Debug.Log(Gameplay.Instance.Grid.CellToWorld(new Vector3Int(to.x, 0, to.z)));
 
 
+    }
+    
+    public void SwitchTeam()
+    {
+        CurrentTeam = CurrentTeam == Checker.Team.White ? Checker.Team.Black : Checker.Team.White;
     }
 }

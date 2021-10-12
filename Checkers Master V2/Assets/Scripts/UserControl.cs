@@ -125,6 +125,9 @@ public class UserControl : MonoBehaviour
                 CommandManager.Instance.AddCommand(command);
             }
         }
+
+        DeselectChecker();
+        currentState = GameState.CheckerSelecting;
     }
 
 
