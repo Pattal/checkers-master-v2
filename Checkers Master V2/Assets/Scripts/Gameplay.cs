@@ -72,4 +72,14 @@ public class Gameplay : MonoBehaviour
     {
         return cell.x >= 0 && cell.x < Width && cell.z >= 0 && cell.z < Height;
     }
+
+    public void MoveChecker(Checker checker, Vector3Int to)
+    {
+        CheckersOnChessboard[checker.CurrentCell.x, checker.CurrentCell.z] = null;
+        CheckersOnChessboard[to.x, to.z] = checker;
+        checker.transform.position = Gameplay.Instance.Grid.GetCellCenterWorld((new Vector3Int(to.x, 0, to.z)));
+        Debug.Log(Gameplay.Instance.Grid.CellToWorld(new Vector3Int(to.x, 0, to.z)));
+
+
+    }
 }

@@ -43,10 +43,11 @@ public abstract class Checker : MonoBehaviour
             }
             else if(Gameplay.Instance.GetChecker(cell) != null && Gameplay.Instance.GetChecker(cell).Side != Side)
             {
+                
                 Vector3Int possibleAttack = GetAttackDirections(cell);
-
-                if(Gameplay.Instance.GetChecker(cell) == null)
+                if (Gameplay.Instance.GetChecker(possibleAttack) == null)
                 {
+                    
                     cells[count] = possibleAttack;
                     count++;
                 }
